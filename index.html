@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reimagine — Your Space, Transformed</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --sage: #8A9E8C;
+    --sage-light: #C5D4C7;
+    --terracotta: #C27B5A;
+    --terracotta-light: #E8C4AD;
+    --charcoal: #2C2C2C;
+    --muted: #7A7065;
+    --border: #E8E0D5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--charcoal);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--terracotta); }
+
+  .tagline-small {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 52px 24px 36px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .hero p {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+
+  .main-content {
+    padding: 0 20px 60px;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--sage);
+    margin-bottom: 12px;
+  }
+
+  /* Upload area */
+  .upload-zone {
+    border: 2px dashed var(--terracotta-light);
+    border-radius: 12px;
+    padding: 36px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #FDF5EE;
+    position: relative;
+  }
+
+  .upload-zone:hover { border-color: var(--terracotta); background: #FAF0E8; }
+
+  .upload-zone.has-image {
+    border-style: solid;
+    border-color: var(--sage);
+    padding: 12px;
+  }
+
+  .upload-zone img {
+    max-width: 100%;
+    max-height: 260px;
+    border-radius: 8px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .upload-icon { font-size: 2.2rem; margin-bottom: 10px; }
+
+  .upload-zone p {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .upload-zone strong { color: var(--terracotta); }
+
+  input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Space selector */
+  .space-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .space-btn {
+    padding: 10px 8px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--warm-white);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--charcoal);
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .space-btn:hover { border-color: var(--sage); background: #F0F5F1; }
+  .space-btn.selected { border-color: var(--sage); background: #E8F0EA; color: var(--sage); font-weight: 500; }
+
+  .space-btn .emoji { font-size: 1.2rem; display: block; margin-bottom: 4px; }
+
+  /* Concerns textarea */
+  textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--charcoal);
+    background: var(--warm-white);
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+    line-height: 1.5;
+  }
+
+  textarea:focus { border-color: var(--sage); }
+  textarea::placeholder { color: #B8AFA6; }
+
+  /* Analyze button */
+  .analyze-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .analyze-btn:hover:not(:disabled) { background: #B06D4A; transform: translateY(-1px); }
+  .analyze-btn:disabled { background: #D4C4BB; cursor: not-allowed; transform: none; }
+
+  /* Results */
+  .results-card {
+    background: var(--warm-white);
+    border: 1.5px solid var(--sage-light);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 640px;
+    margin: 0 auto 20px;
+    display: none;
+  }
+
+  .results-card.visible { display: block; animation: fadeUp 0.4s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .results-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .results-header .check { font-size: 1.4rem; }
+
+  .results-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+  }
+
+  .result-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--charcoal);
+    white-space: pre-wrap;
+  }
+
+  .result-text strong {
+    color: var(--terracotta);
+    font-weight: 500;
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 32px;
+    display: none;
+  }
+
+  .loading.visible { display: block; }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--terracotta);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 14px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading p { color: var(--muted); font-size: 0.9rem; }
+
+  /* Uses counter */
+  .uses-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: #F0F5F1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.82rem;
+    color: var(--sage);
+  }
+
+  /* Referral */
+  .referral-card {
+    background: linear-gradient(135deg, #F5EDE6, #EAF0EB);
+    border: 1px solid var(--terracotta-light);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+
+  .referral-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+
+  .referral-card p { font-size: 0.84rem; color: var(--muted); margin-bottom: 14px; }
+
+  .referral-link-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .copy-btn {
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+  }
+
+  /* Affiliate */
+  .affiliate-strip {
+    max-width: 640px;
+    margin: 0 auto 20px;
+    padding: 0 20px;
+  }
+
+  .affiliate-strip p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .affiliate-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .affiliate-link {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--charcoal);
+    text-decoration: none;
+    background: var(--warm-white);
+    transition: all 0.15s;
+  }
+
+  .affiliate-link:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  .error-msg {
+    background: #FDF0EC;
+    border: 1px solid #E8B4A0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.86rem;
+    color: #B05A3A;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .error-msg.visible { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Re<span>imagine</span></div>
+  <div class="tagline-small">Your stuff isn't the problem. The arrangement is.</div>
+</header>
+
+<div class="hero">
+  <h1>Transform your space<br>using <em>what you already own.</em></h1>
+  <p>Upload a photo of any room. Get a real, personalized plan to declutter and organize — no buying anything new required.</p>
+</div>
+
+<div class="main-content">
+
+  <!-- Uses counter -->
+  <div class="uses-bar" id="usesBar">
+    🌿 <span id="usesText">2 free analyses today</span>
+  </div>
+
+  <!-- Upload -->
+  <div class="card">
+    <div class="section-label">Step 1 — Upload Your Photo</div>
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*">
+      <div id="uploadPlaceholder">
+        <div class="upload-icon">📷</div>
+        <p><strong>Tap to upload a photo</strong></p>
+        <p>Garage, closet, bedroom, kitchen, office — any space</p>
+      </div>
+      <img id="previewImg" style="display:none;" alt="Your space">
+    </div>
+  </div>
+
+  <!-- Space type -->
+  <div class="card">
+    <div class="section-label">Step 2 — What Kind of Space?</div>
+    <div class="space-grid">
+      <button class="space-btn" data-space="garage"><span class="emoji">🚗</span>Garage</button>
+      <button class="space-btn" data-space="closet"><span class="emoji">👗</span>Closet</button>
+      <button class="space-btn" data-space="bedroom"><span class="emoji">🛏</span>Bedroom</button>
+      <button class="space-btn" data-space="kitchen"><span class="emoji">🍳</span>Kitchen</button>
+      <button class="space-btn" data-space="home office"><span class="emoji">💻</span>Office</button>
+      <button class="space-btn" data-space="kids room"><span class="emoji">🧸</span>Kids Room</button>
+      <button class="space-btn" data-space="bathroom"><span class="emoji">🛁</span>Bathroom</button>
+      <button class="space-btn" data-space="storage area"><span class="emoji">📦</span>Storage</button>
+      <button class="space-btn" data-space="living room"><span class="emoji">🛋</span>Living Room</button>
+    </div>
+  </div>
+
+  <!-- Concerns -->
+  <div class="card">
+    <div class="section-label">Step 3 — Anything Specific? (optional)</div>
+    <textarea id="concerns" rows="3" placeholder="e.g. Can't find anything, overwhelmed when I open the door, need more floor space..."></textarea>
+  </div>
+
+  <!-- Error -->
+  <div class="error-msg" id="errorMsg"></div>
+
+  <!-- Button -->
+  <div style="max-width:640px;margin:0 auto 20px;">
+    <button class="analyze-btn" id="analyzeBtn" disabled>Upload a photo to get started</button>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Analyzing your space…</p>
+  </div>
+
+  <!-- Results -->
+  <div class="results-card" id="resultsCard">
+    <div class="results-header">
+      <span class="check">✨</span>
+      <h2>Your Personalized Plan</h2>
+    </div>
+    <div class="result-text" id="resultText"></div>
+  </div>
+
+  <!-- Affiliate links (shown after results) -->
+  <div class="affiliate-strip" id="affiliateStrip" style="display:none;">
+    <p>Helpful organizing tools (affiliate links — small commission helps keep this free):</p>
+    <div class="affiliate-links">
+      <a class="affiliate-link" href="https://www.amazon.com/s?k=storage+bins+organizer&tag=reimagine1-20" target="_blank">Storage Bins</a>
+      <a class="affiliate-link" href="https://www.amazon.com/s?k=closet+organizer+system&tag=reimagine1-20" target="_blank">Closet Systems</a>
+      <a class="affiliate-link" href="https://www.amazon.com/s?k=label+maker&tag=reimagine1-20" target="_blank">Label Maker</a>
+      <a class="affiliate-link" href="https://www.amazon.com/s?k=drawer+organizer&tag=reimagine1-20" target="_blank">Drawer Organizers</a>
+      <a class="affiliate-link" href="https://www.amazon.com/s?k=shelf+organizer&tag=reimagine1-20" target="_blank">Shelf Organizers</a>
+    </div>
+  </div>
+
+  <!-- Referral -->
+  <div class="referral-card" id="referralCard" style="display:none;">
+    <h3>Get unlimited free analyses 🌿</h3>
+    <p>Share Reimagine with 3 friends and unlock unlimited access — free forever.</p>
+    <div class="referral-link-box" id="referralBox">
+      <span id="referralUrl">reimagine1.netlify.app</span>
+      <button class="copy-btn" onclick="copyReferral()">Copy Link</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2025 Reimagine · Made with care for overwhelmed spaces everywhere
+</footer>
+
+<script>
+  // --- State ---
+  let selectedSpace = null;
+  let imageBase64 = null;
+  let imageMediaType = null;
+  let usesLeft = parseInt(localStorage.getItem('reimagine_uses_left') ?? '2');
+  let usesDate = localStorage.getItem('reimagine_uses_date') ?? '';
+
+  // Reset uses daily
+  const today = new Date().toDateString();
+  if (usesDate !== today) {
+    usesLeft = 2;
+    localStorage.setItem('reimagine_uses_left', '2');
+    localStorage.setItem('reimagine_uses_date', today);
+  }
+
+  function updateUsesBar() {
+    const el = document.getElementById('usesText');
+    if (usesLeft <= 0) {
+      el.textContent = 'No free analyses left today — share to unlock more!';
+      document.getElementById('usesBar').style.background = '#FDF0EC';
+    } else {
+      el.textContent = `${usesLeft} free ${usesLeft === 1 ? 'analysis' : 'analyses'} left today`;
+    }
+  }
+  updateUsesBar();
+
+  // --- File upload ---
+  document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const result = ev.target.result;
+      const parts = result.split(',');
+      imageBase64 = parts[1];
+      imageMediaType = file.type || 'image/jpeg';
+
+      document.getElementById('uploadPlaceholder').style.display = 'none';
+      const img = document.getElementById('previewImg');
+      img.src = result;
+      img.style.display = 'block';
+      document.getElementById('uploadZone').classList.add('has-image');
+
+      checkReady();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // --- Space selection ---
+  document.querySelectorAll('.space-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.space-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSpace = btn.dataset.space;
+      checkReady();
+    });
+  });
+
+  function checkReady() {
+    const btn = document.getElementById('analyzeBtn');
+    if (imageBase64 && selectedSpace) {
+      if (usesLeft <= 0) {
+        btn.textContent = 'No analyses left today — share to unlock more';
+        btn.disabled = true;
+      } else {
+        btn.textContent = 'Analyze My Space →';
+        btn.disabled = false;
+      }
+    } else if (!imageBase64) {
+      btn.textContent = 'Upload a photo to get started';
+      btn.disabled = true;
+    } else {
+      btn.textContent = 'Select a space type to continue';
+      btn.disabled = true;
+    }
+  }
+
+  // --- Analyze ---
+  document.getElementById('analyzeBtn').addEventListener('click', async () => {
+    if (!imageBase64 || !selectedSpace || usesLeft <= 0) return;
+
+    const concerns = document.getElementById('concerns').value.trim();
+
+    document.getElementById('errorMsg').classList.remove('visible');
+    document.getElementById('loading').classList.add('visible');
+    document.getElementById('resultsCard').classList.remove('visible');
+    document.getElementById('affiliateStrip').style.display = 'none';
+    document.getElementById('referralCard').style.display = 'none';
+    document.getElementById('analyzeBtn').disabled = true;
+
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageData: { data: imageBase64, mediaType: imageMediaType },
+          spaceType: selectedSpace,
+          concerns
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        throw new Error(data.error || 'Something went wrong. Please try again.');
+      }
+
+      // Decrement uses
+      usesLeft = Math.max(0, usesLeft - 1);
+      localStorage.setItem('reimagine_uses_left', String(usesLeft));
+      updateUsesBar();
+
+      // Format result — bold **text**
+      const formatted = data.result.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      document.getElementById('resultText').innerHTML = formatted;
+      document.getElementById('resultsCard').classList.add('visible');
+      document.getElementById('affiliateStrip').style.display = 'block';
+
+      // Show referral if 0 uses left
+      if (usesLeft <= 0) {
+        document.getElementById('referralCard').style.display = 'block';
+      }
+
+      document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+
+    } catch (err) {
+      const errEl = document.getElementById('errorMsg');
+      errEl.textContent = err.message;
+      errEl.classList.add('visible');
+    } finally {
+      document.getElementById('loading').classList.remove('visible');
+      checkReady();
+    }
+  });
+
+  function copyReferral() {
+    navigator.clipboard.writeText('https://reimagine1.netlify.app').then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy Link', 2000);
+    });
+  }
+</script>
+</body>
+</html>
