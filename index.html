@@ -1,107 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reimagine</title>
     <style>
-        body { 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #app { 
-            width: 90%;
-            max-width: 400px; 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 30px; 
-            border-radius: 30px; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        h1 { 
-            color: #1e293b; 
-            font-size: 2rem;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        p { color: #64748b; margin-bottom: 25px; }
-
-        #preview { 
-            width: 100%; 
-            height: 250px; 
-            object-fit: cover;
-            border-radius: 20px; 
-            margin-bottom: 20px; 
-            display: none; 
-            border: 4px solid #fff;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
-        .btn-group { display: flex; flex-direction: column; gap: 10px; }
-
-        button { 
-            padding: 18px; 
-            border: none; 
-            border-radius: 15px; 
-            font-weight: 700; 
-            font-size: 16px; 
-            cursor: pointer; 
-            transition: transform 0.2s, opacity 0.2s; 
-        }
-
-        .primary { background: #6366f1; color: white; }
-        .primary:hover { transform: scale(1.02); opacity: 0.9; }
-
-        #clear-btn { background: #f1f5f9; color: #475569; display: none; }
-        #clear-btn:hover { background: #e2e8f0; }
+        body { background-color: #e0f7fa; font-family: sans-serif; text-align: center; padding: 50px; }
+        .box { background: white; padding: 40px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        button { margin-top: 20px; padding: 15px 30px; font-size: 18px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
     </style>
 </head>
 <body>
-
-<div id="app">
-    <h1>Reimagine</h1>
-    <p>Upload a space to see the vision.</p>
-    
-    <img id="preview" src="#" alt="Preview">
-    
-    <div class="btn-group">
-        <input type="file" id="imageInput" accept="image/*" style="display:none;">
-        <button class="primary" onclick="document.getElementById('imageInput').click()">Upload Photo</button>
-        <button id="clear-btn" onclick="clearPhoto()">Remove</button>
+    <div class="box">
+        <h1>Reimagine</h1>
+        <p>Upload photos to declutter your space</p>
+        <input type="file" id="imageInput" accept="image/*">
+        <br>
+        <button onclick="alert('AI is starting!')">Reimagine Room</button>
     </div>
-</div>
-
-<script>
-    const input = document.getElementById('imageInput');
-    const preview = document.getElementById('preview');
-    const clearBtn = document.getElementById('clear-btn');
-
-    input.onchange = evt => {
-        const [file] = input.files;
-        if (file) {
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = 'block';
-            clearBtn.style.display = 'block';
-        }
-    };
-
-    function clearPhoto() {
-        preview.src = "#";
-        preview.style.display = 'none';
-        clearBtn.style.display = 'none';
-        input.value = "";
-    }
-</script>
-
 </body>
 </html>
