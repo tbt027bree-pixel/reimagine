@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Reimagine</title>
-</head>
 <body>
-    <h1>Reimagine</h1>
-    <p>AI-Powered Space Decluttering</p>
+  <h1>Reimagine</h1>
+  <input type="file" id="upload">
+  <div id="result"></div>
+  <script>
+    document.getElementById('upload').addEventListener('change', function(e) {
+      document.getElementById('result').innerHTML = "Image uploaded.";
+    });
+  </script>
 </body>
 </html>
